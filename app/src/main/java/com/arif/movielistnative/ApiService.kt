@@ -1,5 +1,6 @@
 package com.arif.movielistnative
 
+import MovieDetailsResponseModel
 import com.arif.movielistnative.model.NowShowingMovieResponseModel
 import com.haroldadmin.cnradapter.NetworkResponse
 import retrofit2.http.GET
@@ -14,7 +15,7 @@ interface ApiService {
     suspend fun getPopularMovie(): NetworkResponse<PopularMovieResponseModel, ErrorResponse>
 
     @GET("/3/movie/{movieId}?api_key=98f3908014410fc8a0a0393df1b060af&language=en-US")
-    suspend fun getMovieDetailsById(@Path ("movieId") id: Int): NetworkResponse<PopularMovieResponseModel, ErrorResponse>
+    suspend fun getMovieDetailsById(@Path ("movieId") id: Int): NetworkResponse<MovieDetailsResponseModel, ErrorResponse>
 
 
 

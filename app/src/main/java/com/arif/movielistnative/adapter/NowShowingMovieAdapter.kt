@@ -9,10 +9,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.arif.movielistnative.R
+import com.arif.movielistnative.listener.ItemOnClickListener
 import com.arif.movielistnative.model.ResultsItemNowShowing
 import com.bumptech.glide.Glide
 
-class NowShowingMovieAdapter(private val data: List<ResultsItemNowShowing>) :
+class NowShowingMovieAdapter(private val data: List<ResultsItemNowShowing>, private val listener: ItemOnClickListener) :
     RecyclerView.Adapter<NowShowingMovieAdapter.MyViewHolder>() {
 
 
@@ -32,6 +33,10 @@ class NowShowingMovieAdapter(private val data: List<ResultsItemNowShowing>) :
 
         holder.ratting.text = data[position].voteAverage.toString() + "/IMDb"
 
+        holder.nowShowingView.setOnClickListener {
+            listener.onClickListener("movieid", data[position].id!!)
+        }
+
     }
 
 
@@ -41,6 +46,7 @@ class NowShowingMovieAdapter(private val data: List<ResultsItemNowShowing>) :
 
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val nowShowingView: LinearLayout = itemView.findViewById(R.id.nowShowingView)
         val image: ImageView = itemView.findViewById(R.id.nowShowingImage)
         val title: TextView = itemView.findViewById(R.id.nowShowingTitle)
         val ratting: TextView = itemView.findViewById(R.id.nowShowingRatting)
