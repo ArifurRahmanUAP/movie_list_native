@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arif.movielistnative.R
 
 class GenreListAdapter(
-    private val arrayList: List<GenresItem>
+    private val arrayList: List<GenresItem>, private val list: List<String>
 ) :
     RecyclerView.Adapter<GenreListAdapter.MyViewHolder>() {
 
@@ -26,12 +26,16 @@ class GenreListAdapter(
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val item = arrayList[position]
 
-        holder.genresName.text = item.name
+        if (list.isEmpty()) {
+            holder.genresName.text = arrayList[position].name
+        } else
+            holder.genresName.text = list[position]
     }
 
     override fun getItemCount(): Int {
-        return arrayList.size
+        return if (list.isEmpty()) {
+            arrayList.size
+        } else list.size
     }
 }

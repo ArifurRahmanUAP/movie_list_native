@@ -5,6 +5,9 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+    <color name="blue">#0128FF</color>
+    <color name="light_blue_30">#E3E7FD</color>
+    <color name="light_blue_50">#526DFF</color>
     <color name="black">#FF000000</color>
     <color name="red">#FF1100</color>
     <color name="cyen">#B1B1B1</color>

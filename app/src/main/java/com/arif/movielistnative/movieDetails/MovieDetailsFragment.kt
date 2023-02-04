@@ -20,7 +20,7 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var binding: FragmentDetailsBinding
     private val viewModel: MovieDetailsViewModel by viewModels()
     private var movieDetailsResponse: MovieDetailsResponseModel? = null
-
+    private val isClick: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,9 +56,10 @@ class MovieDetailsFragment : Fragment() {
 
                 binding.movieDetailsRatting.text = data.voteAverage.toString() + "/10 IMDb"
 
+                val list: List<String> = listOf()
 
                 val genreListAdapter =
-                    GenreListAdapter(movieResponse.genres as List<GenresItem>)
+                    GenreListAdapter(movieResponse.genres as List<GenresItem>, list)
                 binding.genresListId.adapter = genreListAdapter
 
                 binding.detailsLengthId.text = minuteToTime(data.runtime!!)
@@ -104,7 +105,7 @@ class MovieDetailsFragment : Fragment() {
                             binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_clock))
                         }
                     }
-                    data.isBookmarked != data.isBookmarked
+                    data.isBookmarked = !data.isBookmarked
                 }
             }
         }
