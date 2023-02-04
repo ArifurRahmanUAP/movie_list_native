@@ -1,25 +1,25 @@
-package com.arif.movielistnative.adapter
+package com.arif.movielistnative.Home.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.arif.movielistnative.R
-import com.arif.movielistnative.listener.ItemOnClickListener
-import com.arif.movielistnative.model.ResultsItemNowShowing
+import com.arif.movielistnative.ResultsItem
+import com.arif.movielistnative.Utill.listener.ItemOnClickListener
 import com.bumptech.glide.Glide
 
-class NowShowingMovieAdapter(private val data: List<ResultsItemNowShowing>, private val listener: ItemOnClickListener) :
-    RecyclerView.Adapter<NowShowingMovieAdapter.MyViewHolder>() {
+class PopularMoviesAdapter(private val data: List<ResultsItem>, private val listener: ItemOnClickListener) :
+    RecyclerView.Adapter<PopularMoviesAdapter.MyViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.view_now_showing_movie, parent, false)
+            .inflate(R.layout.view_popular_movie_showing, parent, false)
         return MyViewHolder(itemView)
     }
 
@@ -31,12 +31,10 @@ class NowShowingMovieAdapter(private val data: List<ResultsItemNowShowing>, priv
             .error(R.drawable.movie_poster).into(holder.image)
         holder.title.text = data[position].originalTitle
 
-        holder.ratting.text = data[position].voteAverage.toString() + "/IMDb"
-
-        holder.nowShowingView.setOnClickListener {
+//        holder.ratting.text = data[position].voteAverage.toString() + "/IMDb"
+        holder.layout.setOnClickListener {
             listener.onClickListener("movieid", data[position].id!!)
         }
-
     }
 
 
@@ -46,10 +44,10 @@ class NowShowingMovieAdapter(private val data: List<ResultsItemNowShowing>, priv
 
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nowShowingView: LinearLayout = itemView.findViewById(R.id.nowShowingView)
-        val image: ImageView = itemView.findViewById(R.id.nowShowingImage)
-        val title: TextView = itemView.findViewById(R.id.nowShowingTitle)
-        val ratting: TextView = itemView.findViewById(R.id.nowShowingRatting)
+        val layout: CardView = itemView.findViewById(R.id.popular_movie_layout)
+        val image: ImageView = itemView.findViewById(R.id.popularImage)
+        val title: TextView = itemView.findViewById(R.id.popularMovieTitle)
+//        val ratting: TextView = itemView.findViewById(R.id.nowShowingRatting)
 
     }
 }

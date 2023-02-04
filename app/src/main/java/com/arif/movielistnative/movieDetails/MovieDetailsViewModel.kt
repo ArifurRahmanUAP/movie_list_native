@@ -31,7 +31,7 @@ class MovieDetailsViewModel @Inject constructor(private val apiRepository: AppRe
 
                 is NetworkResponse.Success -> {
                     val output = response.body
-//                    output.isBookmarked = apiRepository.check(id)
+                    output.isBookmarked = apiRepository.isBookmarkExist(id)
                     _detailsMovieLiveData.value = output
                 }
                 is NetworkResponse.ServerError -> {
@@ -49,6 +49,9 @@ class MovieDetailsViewModel @Inject constructor(private val apiRepository: AppRe
 
     fun addBookmarks(appTable: AppTable) {
         viewModelScope.launch { apiRepository.addToBookmark(appTable) }
+    }
+    fun deleteBookmarks(id: Int?) {
+        viewModelScope.launch { apiRepository.deleteFromBookmark(id) }
     }
 
 }

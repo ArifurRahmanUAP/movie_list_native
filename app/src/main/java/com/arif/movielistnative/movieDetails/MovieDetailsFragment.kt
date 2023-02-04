@@ -2,11 +2,10 @@ package com.arif.movielistnative.movieDetails
 
 import MovieDetailsResponseModel
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.arif.movielistnative.R
 import com.arif.movielistnative.dataBase.AppTable
@@ -24,7 +23,6 @@ class MovieDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -57,28 +55,47 @@ class MovieDetailsFragment : Fragment() {
 
                 binding.movieDetailsDescription.text = data.overview
 
+                if (data.isBookmarked) {
+                    binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_clock))
+
+                } else
+                    binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmark))
+
                 binding.bookmarkId.setOnClickListener {
-                    movieDetailsResponse?.let {
 
-                        val appTable =AppTable(
-                            id = it.id,
-                            originalTitle = it.originalTitle,
-                            voteAverage = it.voteAverage,
-                            runtime = it.runtime,
-                            overview = it.overview,
-                            posterPath = it.posterPath
-                        )
+                    if (data.isBookmarked) {
+                        movieDetailsResponse?.let {
+                            viewModel.deleteBookmarks(data.id)
+                            binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmark))
+                        }
+                    } else {
+                        movieDetailsResponse?.let {
 
-                        viewModel.addBookmarks(appTable)
-
-
+                            val appTable = AppTable(
+                                id = it.id,
+                                originalTitle = it.originalTitle,
+                                voteAverage = it.voteAverage,
+                                runtime = minuteToTime(it.runtime!!),
+                                overview = it.overview,
+                                posterPath = it.posterPath
+                            )
+                            viewModel.addBookmarks(appTable)
+                            binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_clock))
+                        }
                     }
+                    data.isBookmarked != data.isBookmarked
                 }
-
             }
         }
-
-
     }
 
+    fun minuteToTime(minute: Int): String? {
+        var minute = minute
+        var hour = minute / 60
+        minute %= 60
+        if (hour == 0) {
+            hour = 12
+        }
+        return (if (hour < 10) "0$hour" else hour).toString() + "h " + (if (minute < 10) "0$minute" else minute) + "m"
+    }
 }

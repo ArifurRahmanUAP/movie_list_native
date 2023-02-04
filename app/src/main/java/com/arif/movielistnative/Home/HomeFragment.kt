@@ -1,4 +1,4 @@
-package com.arif.movielistnative
+package com.arif.movielistnative.Home
 
 import android.app.ProgressDialog
 import android.content.Context
@@ -7,14 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.arif.movielistnative.adapter.NowShowingMovieAdapter
-import com.arif.movielistnative.adapter.PopularMoviesAdapter
+import com.arif.movielistnative.MainActivity
+import com.arif.movielistnative.R
+import com.arif.movielistnative.ResultsItem
+import com.arif.movielistnative.Home.adapter.NowShowingMovieAdapter
+import com.arif.movielistnative.Home.adapter.PopularMoviesAdapter
 import com.arif.movielistnative.databinding.FragmentHomeBinding
-import com.arif.movielistnative.listener.ItemOnClickListener
+import com.arif.movielistnative.Utill.listener.ItemOnClickListener
 import com.arif.movielistnative.model.ResultsItemNowShowing
 import dagger.hilt.android.AndroidEntryPoint
 

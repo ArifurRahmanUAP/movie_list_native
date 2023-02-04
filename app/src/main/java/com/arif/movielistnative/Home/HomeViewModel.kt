@@ -1,4 +1,4 @@
-package com.arif.movielistnative
+package com.arif.movielistnative.Home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.arif.movielistnative.model.NowShowingMovieResponseModel
 import javax.inject.Inject
 import androidx.lifecycle.viewModelScope
+import com.arif.movielistnative.AppRepository
+import com.arif.movielistnative.PopularMovieResponseModel
 import com.haroldadmin.cnradapter.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

@@ -13,8 +13,11 @@ interface AppDao {
     suspend fun addBookmark(appTable: AppTable)
 
     @Query("SELECT * FROM appTable")
-    suspend fun getAllScheduleApps():List<AppTable>
+    suspend fun getAllBookmarks():List<AppTable>
 
     @Query("SELECT EXISTS(SELECT * FROM appTable WHERE id = :id) " )
     suspend fun checkIfExit(id:Int): Boolean
+    @Query("Delete FROM appTable WHERE id = :id " )
+    suspend fun deleteBookmark(id: Int?)
+
 }

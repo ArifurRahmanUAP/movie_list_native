@@ -17,7 +17,7 @@ data class AppTable(
     val voteAverage: Double? = 0.0,
 
     @ColumnInfo(name = "runtime")
-    val runtime: Int? = null,
+    val runtime: String? = null,
 
     @ColumnInfo(name = "overview")
     val overview: String? = null,
