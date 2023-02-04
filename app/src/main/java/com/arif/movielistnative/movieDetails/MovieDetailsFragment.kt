@@ -1,5 +1,6 @@
 package com.arif.movielistnative.movieDetails
 
+import GenresItem
 import MovieDetailsResponseModel
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.fragment.app.viewModels
 import com.arif.movielistnative.R
 import com.arif.movielistnative.dataBase.AppTable
 import com.arif.movielistnative.databinding.FragmentDetailsBinding
+import com.arif.movielistnative.movieDetails.adapter.GenreListAdapter
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,6 +20,7 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var binding: FragmentDetailsBinding
     private val viewModel: MovieDetailsViewModel by viewModels()
     private var movieDetailsResponse: MovieDetailsResponseModel? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +56,17 @@ class MovieDetailsFragment : Fragment() {
 
                 binding.movieDetailsRatting.text = data.voteAverage.toString() + "/10 IMDb"
 
+
+                val genreListAdapter =
+                    GenreListAdapter(movieResponse.genres as List<GenresItem>)
+                binding.genresListId.adapter = genreListAdapter
+
+                binding.detailsLengthId.text = minuteToTime(data.runtime!!)
+
+                binding.detailsLanguageId.text = data.spokenLanguages?.get(0)?.name.toString()
+
+                binding.detailsRattingId.text = if (data.adult!!) "R" else "PG-13"
+
                 binding.movieDetailsDescription.text = data.overview
 
                 if (data.isBookmarked) {
@@ -71,13 +85,20 @@ class MovieDetailsFragment : Fragment() {
                     } else {
                         movieDetailsResponse?.let {
 
+                            val geners: StringBuilder = StringBuilder()
+
+                            for (list in it.genres!!) {
+                                geners.append(list!!.name + ",")
+                            }
+
                             val appTable = AppTable(
                                 id = it.id,
                                 originalTitle = it.originalTitle,
                                 voteAverage = it.voteAverage,
                                 runtime = minuteToTime(it.runtime!!),
                                 overview = it.overview,
-                                posterPath = it.posterPath
+                                posterPath = it.posterPath,
+                                genres = geners.substring(0, geners.length - 1)
                             )
                             viewModel.addBookmarks(appTable)
                             binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_clock))

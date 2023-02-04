@@ -13,7 +13,6 @@ import com.arif.movielistnative.Utill.listener.DeleteListener
 import com.arif.movielistnative.Utill.listener.ItemOnClickListener
 import com.arif.movielistnative.dataBase.AppTable
 import com.arif.movielistnative.databinding.FragmentBookmarkBinding
-import com.arif.movielistnative.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,9 +20,8 @@ class BookmarkFragment : Fragment(), DeleteListener, ItemOnClickListener {
 
     private lateinit var binding: FragmentBookmarkBinding
     private val viewModel: BookmarkViewModel by viewModels()
-    private  val list= arrayListOf<AppTable>()
-    private lateinit var programAdapter: BookmarkAdapter
-
+    private val list = arrayListOf<AppTable>()
+    private lateinit var bookmarkAdapter: BookmarkAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,25 +35,23 @@ class BookmarkFragment : Fragment(), DeleteListener, ItemOnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getBookmarkData()
-        viewModel.bookmarkLiveData.observe(viewLifecycleOwner){
+        viewModel.bookmarkLiveData.observe(viewLifecycleOwner) {
             list.clear()
             list.addAll(it)
-            programAdapter= BookmarkAdapter(list,this, this)
-            binding.bookmarkRecyclerId.adapter=programAdapter
-
+            bookmarkAdapter = BookmarkAdapter(list, this, this)
+            binding.bookmarkRecyclerId.adapter = bookmarkAdapter
         }
-
     }
 
     override fun onDelete(appTable: AppTable) {
         viewModel.deleteBookmark(appTable.id)
         list.remove(appTable)
-        programAdapter.notifyDataSetChanged()    }
+        bookmarkAdapter.notifyDataSetChanged()
+    }
 
     override fun onClickListener(name: String, value: Int) {
         val bundle = Bundle()
         bundle.putInt("movieId", value)
         findNavController().navigate(R.id.action_bookmarkFragment_to_detailsFragment, bundle)
     }
-
 }

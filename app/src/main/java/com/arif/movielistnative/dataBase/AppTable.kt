@@ -25,5 +25,8 @@ data class AppTable(
     @ColumnInfo(name = "posterPath")
     val posterPath: String? = null,
 
+    @ColumnInfo(name = "genres")
+    val genres: String? = null,
+
 
     )
