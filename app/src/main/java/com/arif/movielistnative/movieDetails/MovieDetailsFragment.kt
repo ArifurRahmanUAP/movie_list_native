@@ -71,7 +71,7 @@ class MovieDetailsFragment : Fragment() {
                 binding.movieDetailsDescription.text = data.overview
 
                 if (data.isBookmarked) {
-                    binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_clock))
+                    binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmarked))
 
                 } else
                     binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmark))
@@ -102,7 +102,7 @@ class MovieDetailsFragment : Fragment() {
                                 genres = geners.substring(0, geners.length - 1)
                             )
                             viewModel.addBookmarks(appTable)
-                            binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_clock))
+                            binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmarked))
                         }
                     }
                     data.isBookmarked = !data.isBookmarked
