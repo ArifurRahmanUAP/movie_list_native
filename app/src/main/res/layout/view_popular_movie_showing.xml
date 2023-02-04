@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     app:cardCornerRadius="30dp"
     android:elevation="3dp"
+    android:id="@+id/popular_movie_layout"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 

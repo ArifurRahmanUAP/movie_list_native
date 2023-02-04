@@ -14,13 +14,10 @@ data class AppTable(
     val originalTitle: String? = null,
 
     @ColumnInfo(name = "voteAverage")
-    val voteAverage: String? = "",
+    val voteAverage: Double? = 0.0,
 
     @ColumnInfo(name = "runtime")
     val runtime: Int? = null,
-
-    @ColumnInfo(name = "originalLanguage")
-    val originalLanguage: String? = null,
 
     @ColumnInfo(name = "overview")
     val overview: String? = null,

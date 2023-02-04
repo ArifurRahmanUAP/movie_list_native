@@ -61,7 +61,7 @@ data class MovieDetailsResponseModel(
     val releaseDate: String? = null,
 
     @field:Json(name = "vote_average")
-    val voteAverage: Any? = null,
+    val voteAverage: Double? = null,
 
     @field:Json(name = "belongs_to_collection")
     val belongsToCollection: BelongsToCollection? = null,

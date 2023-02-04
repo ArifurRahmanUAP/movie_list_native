@@ -1,12 +1,17 @@
 package com.arif.movielistnative.api
 
+import android.content.Context
+import androidx.room.Room
 import androidx.viewbinding.BuildConfig
 import com.arif.movielistnative.ApiService
 import com.arif.movielistnative.Utill.Constants
+import com.arif.movielistnative.dataBase.AppDao
+import com.arif.movielistnative.dataBase.AppDatabase
 import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -67,22 +72,16 @@ object AppModule {
         return retrofit.create(ApiService::class.java)
     }
 
-//    @Provides
-//    @Singleton
-//    fun providePreference(@ApplicationContext context: Context): PreferencesHelper {
-//        return PreferencesHelper(context)
-//    }
-//
-//    @Provides
-//    @Singleton
-//    fun buildDatabase(@ApplicationContext context: Context): AppDatabase{
-//        return Room.databaseBuilder(context, AppDatabase::class.java, "app_db").build()
-//    }
-//
-//    @Provides
-//    @Singleton
-//    fun getAppDao(appDatabase: AppDatabase): AppDao{
-//        return appDatabase.getAppDAo()
-//    }
+    @Provides
+    @Singleton
+    fun buildDatabase(@ApplicationContext context: Context): AppDatabase{
+        return Room.databaseBuilder(context, AppDatabase::class.java, "app_db").build()
+    }
+
+    @Provides
+    @Singleton
+    fun getAppDao(appDatabase: AppDatabase): AppDao {
+        return appDatabase.getAppDAo()
+    }
 
 }
