@@ -15,23 +15,19 @@ import com.arif.movielistnative.Home.adapter.NowShowingMovieAdapter
 import com.arif.movielistnative.Home.adapter.PopularMoviesAdapter
 import com.arif.movielistnative.Utill.listener.ItemOnClickListener
 import com.arif.movielistnative.databinding.FragmentHomeBinding
+import com.arif.movielistnative.model.NowShowingMovieResponseModel
 import com.arif.movielistnative.model.ResultsItemNowShowing
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), ItemOnClickListener {
-    val resultsTotalPopular = mutableListOf<ResultsItem>()
-    val resultsTotalNowShowing = mutableListOf<ResultsItemNowShowing>()
-    private lateinit var layoutManager: LinearLayoutManager
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
-    private var isLoading: Boolean = false
-
     lateinit var popularMoviesAdapter: PopularMoviesAdapter
     lateinit var nowShowingMovieAdapter: NowShowingMovieAdapter
     private var pageNumPopularMovies = 1
-    private var pageNumNowShowingMovies = 1
+    private var pageNumNowShowingMovies = 2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,22 +39,26 @@ class HomeFragment : Fragment(), ItemOnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        layoutManager = LinearLayoutManager(this.context)
         binding.drawerIcon.setOnClickListener {
             (activity as MainActivity).openDrawer()
         }
+        viewModel.callNowShowingMovieList(1)
+        initViews()
         getMovies()
 
-        binding.popularRecView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) {
-                    pageNumPopularMovies++
-                    getPaginationPopularMovie()
-                }
-            }
-        })
+    }
 
+    private fun initViews() {
+
+        nowShowingMovieAdapter = NowShowingMovieAdapter(this)
+        binding.nowShowingRecyclerView.adapter = nowShowingMovieAdapter
+
+        popularMoviesAdapter = PopularMoviesAdapter(this)
+        binding.popularRecView.adapter = popularMoviesAdapter
+
+    }
+
+    private fun getMovies() {
 
         binding.nowShowingRecyclerView.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
@@ -66,77 +66,45 @@ class HomeFragment : Fragment(), ItemOnClickListener {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollHorizontally(1)) {
                     pageNumNowShowingMovies++
-                    getPaginationNowShowingMovie()
+                    viewModel.callNowShowingMovieList(pageNumNowShowingMovies)
                 }
             }
-
         })
 
-
-    }
-
-    private fun getMovies() {
-
-        viewModel.callNowShowingMovieList(pageNumNowShowingMovies)
-
         viewModel.nowShowingList.observe(viewLifecycleOwner) { data ->
-            nowShowingMovieAdapter =
-                NowShowingMovieAdapter(data?.results as List<ResultsItemNowShowing>, this)
-            binding.nowShowingRecyclerView.adapter = nowShowingMovieAdapter
 
+            if (pageNumNowShowingMovies == 1) {
+                nowShowingMovieAdapter.initLoad(data?.results as List<ResultsItemNowShowing>)
+            } else {
+                nowShowingMovieAdapter.pagingLoad(data?.results as List<ResultsItemNowShowing>)
+            }
         }
 
-        viewModel.callPopularMovieList(pageNumPopularMovies)
-
-        viewModel.popularMovieList.observe(viewLifecycleOwner) { data ->
-            resultsTotalPopular.addAll(data?.results!!)
-            popularMoviesAdapter =
-                PopularMoviesAdapter(data?.results as List<ResultsItem>, this)
-            binding.popularRecView.adapter = popularMoviesAdapter
-
-        }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
-        }
-
-    }
-
-
-    private fun getPaginationPopularMovie() {
+        binding.popularRecView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    pageNumPopularMovies++
+                    viewModel.callPopularMovieList(pageNumPopularMovies)
+                }
+            }
+        })
 
         viewModel.callPopularMovieList(pageNumPopularMovies)
 
         viewModel.popularMovieList.observe(viewLifecycleOwner) { data ->
 
-            resultsTotalPopular.addAll(data?.results!!)
-
-            popularMoviesAdapter =
-                PopularMoviesAdapter(resultsTotalPopular, this)
-            binding.popularRecView.adapter = popularMoviesAdapter
-            popularMoviesAdapter.notifyDataSetChanged()
-
+            if (pageNumPopularMovies == 1) {
+                popularMoviesAdapter.initLoad(data?.results as List<ResultsItem>)
+            } else {
+                popularMoviesAdapter.pagingLoad(data?.results as List<ResultsItem>)
+            }
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun getPaginationNowShowingMovie() {
-
-        viewModel.callNowShowingMovieList(pageNumNowShowingMovies)
-
-        viewModel.nowShowingList.observe(viewLifecycleOwner) { data ->
-            resultsTotalNowShowing.addAll(data?.results as List<ResultsItemNowShowing>)
-            nowShowingMovieAdapter =
-                NowShowingMovieAdapter(resultsTotalNowShowing, this)
-            binding.nowShowingRecyclerView.adapter = nowShowingMovieAdapter
-            nowShowingMovieAdapter.notifyDataSetChanged()
-
-        }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
-        }
-    }
 
     override fun onClickListener(name: String, value: Int) {
         val bundle = Bundle()

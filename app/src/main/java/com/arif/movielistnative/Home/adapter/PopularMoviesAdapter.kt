@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arif.movielistnative.R
 import com.arif.movielistnative.ResultsItem
 import com.arif.movielistnative.Utill.listener.ItemOnClickListener
+import com.arif.movielistnative.model.ResultsItemNowShowing
 import com.bumptech.glide.Glide
 
-class PopularMoviesAdapter(private val data: List<ResultsItem>, private val listener: ItemOnClickListener) :
+class PopularMoviesAdapter(private val listener: ItemOnClickListener) :
     RecyclerView.Adapter<PopularMoviesAdapter.MyViewHolder>() {
+    private val data: MutableList<ResultsItem> = mutableListOf()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -40,6 +42,21 @@ class PopularMoviesAdapter(private val data: List<ResultsItem>, private val list
 
     override fun getItemCount(): Int {
         return data.size
+    }
+
+    fun initLoad(list: List<ResultsItem>) {
+
+        data.clear()
+        data.addAll(list)
+        notifyDataSetChanged()
+
+    }
+
+    fun pagingLoad(list: List<ResultsItem>) {
+
+        data.addAll(list)
+        notifyItemRangeInserted(itemCount, list.size)
+
     }
 
 

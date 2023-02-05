@@ -13,9 +13,11 @@ import com.arif.movielistnative.Utill.listener.ItemOnClickListener
 import com.arif.movielistnative.model.ResultsItemNowShowing
 import com.bumptech.glide.Glide
 
-class NowShowingMovieAdapter(private val data: List<ResultsItemNowShowing>, private val listener: ItemOnClickListener) :
+class NowShowingMovieAdapter(private val listener: ItemOnClickListener) :
     RecyclerView.Adapter<NowShowingMovieAdapter.MyViewHolder>() {
 
+
+    private val data: MutableList<ResultsItemNowShowing> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -44,6 +46,20 @@ class NowShowingMovieAdapter(private val data: List<ResultsItemNowShowing>, priv
         return data.size
     }
 
+    fun initLoad(list: List<ResultsItemNowShowing>) {
+
+        data.clear()
+        data.addAll(list)
+        notifyDataSetChanged()
+
+    }
+
+    fun pagingLoad(list: List<ResultsItemNowShowing>) {
+
+        data.addAll(list)
+        notifyItemRangeInserted(itemCount, list.size)
+
+    }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nowShowingView: LinearLayout = itemView.findViewById(R.id.nowShowingView)
