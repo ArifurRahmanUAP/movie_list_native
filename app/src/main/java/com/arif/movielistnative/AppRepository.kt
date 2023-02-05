@@ -8,9 +8,9 @@ class AppRepository @Inject constructor(
     private val apiService: ApiService,
     private val appDao: AppDao
 ) {
-    suspend fun getPopularMovies() = apiService.getPopularMovie()
+    suspend fun getPopularMovies(pageNum: Int) = apiService.getPopularMovie(pageNum)
 
-    suspend fun getNowShowingMovies() = apiService.getNowShowingMovie()
+    suspend fun getNowShowingMovies(pageNum: Int) = apiService.getNowShowingMovie(pageNum)
 
     suspend fun getMovieDetailsFromId(id: Int) = apiService.getMovieDetailsById(id)
 

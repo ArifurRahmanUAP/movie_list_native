@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel @Inject constructor(private val apiRepository: AppRepository) : ViewModel() {
 
     private val _nowShowingMoviesLiveData = MutableLiveData<NowShowingMovieResponseModel?>()
-    val nowShowingMovieListLiveData: LiveData<NowShowingMovieResponseModel?> get() = _nowShowingMoviesLiveData
+    val nowShowingList: LiveData<NowShowingMovieResponseModel?> get() = _nowShowingMoviesLiveData
 
     private val _popularMoviesLiveData = MutableLiveData<PopularMovieResponseModel?>()
     val popularMovieList: LiveData<PopularMovieResponseModel?> get() = _popularMoviesLiveData
@@ -25,10 +25,10 @@ class HomeViewModel @Inject constructor(private val apiRepository: AppRepository
     val errorLiveData: LiveData<String> get() = _errorLiveData
 
 
-    fun callNowShowingMovieList() {
+    fun callNowShowingMovieList(pageNum: Int) {
         viewModelScope.launch {
 
-            when (val response = apiRepository.getNowShowingMovies()) {
+            when (val response = apiRepository.getNowShowingMovies(pageNum)) {
                 is NetworkResponse.Success -> {
                     _nowShowingMoviesLiveData.value = response.body
                 }
@@ -48,10 +48,10 @@ class HomeViewModel @Inject constructor(private val apiRepository: AppRepository
 
     }
 
-    fun callPopularMovieList() {
+    fun callPopularMovieList(pageNum: Int) {
         viewModelScope.launch {
 
-            when (val response = apiRepository.getPopularMovies()) {
+            when (val response = apiRepository.getPopularMovies(pageNum)) {
                 is NetworkResponse.Success -> {
                     _popularMoviesLiveData.value = response.body
                 }
