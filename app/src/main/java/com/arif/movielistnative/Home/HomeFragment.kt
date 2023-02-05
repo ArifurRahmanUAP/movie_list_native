@@ -43,9 +43,9 @@ class HomeFragment : Fragment(), ItemOnClickListener {
             (activity as MainActivity).openDrawer()
         }
         viewModel.callNowShowingMovieList(1)
+        viewModel.callPopularMovieList(1)
         initViews()
         getMovies()
-
     }
 
     private fun initViews() {
@@ -55,7 +55,6 @@ class HomeFragment : Fragment(), ItemOnClickListener {
 
         popularMoviesAdapter = PopularMoviesAdapter(this)
         binding.popularRecView.adapter = popularMoviesAdapter
-
     }
 
     private fun getMovies() {
@@ -90,8 +89,6 @@ class HomeFragment : Fragment(), ItemOnClickListener {
             }
         })
 
-        viewModel.callPopularMovieList(pageNumPopularMovies)
-
         viewModel.popularMovieList.observe(viewLifecycleOwner) { data ->
 
             if (pageNumPopularMovies == 1) {
@@ -105,13 +102,11 @@ class HomeFragment : Fragment(), ItemOnClickListener {
         }
     }
 
-
     override fun onClickListener(name: String, value: Int) {
         val bundle = Bundle()
         bundle.putInt("movieId", value)
         findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, bundle)
     }
-
 }
 
 
