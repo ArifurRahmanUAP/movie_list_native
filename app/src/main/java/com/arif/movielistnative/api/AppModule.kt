@@ -3,7 +3,6 @@ package com.arif.movielistnative.api
 import android.content.Context
 import androidx.room.Room
 import androidx.viewbinding.BuildConfig
-import com.arif.movielistnative.ApiService
 import com.arif.movielistnative.Utill.Constants
 import com.arif.movielistnative.dataBase.AppDao
 import com.arif.movielistnative.dataBase.AppDatabase

@@ -12,6 +12,9 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addBookmark(appTable: AppTable)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addGenres(genresTable: GenresTable)
+
     @Query("SELECT * FROM appTable")
     suspend fun getAllBookmarks():List<AppTable>
 

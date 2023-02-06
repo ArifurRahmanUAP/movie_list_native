@@ -11,9 +11,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arif.movielistnative.*
+import com.arif.movielistnative.Genres.Genre
+import com.arif.movielistnative.Genres.GenresModel
 import com.arif.movielistnative.Home.adapter.NowShowingMovieAdapter
 import com.arif.movielistnative.Home.adapter.PopularMoviesAdapter
 import com.arif.movielistnative.Utill.listener.ItemOnClickListener
+import com.arif.movielistnative.api.ApiService
+import com.arif.movielistnative.dataBase.AppTable
+import com.arif.movielistnative.dataBase.GenresTable
 import com.arif.movielistnative.databinding.FragmentHomeBinding
 import com.arif.movielistnative.model.NowShowingMovieResponseModel
 import com.arif.movielistnative.model.ResultsItemNowShowing
@@ -43,6 +48,7 @@ class HomeFragment : Fragment(), ItemOnClickListener {
             (activity as MainActivity).openDrawer()
         }
         viewModel.callNowShowingMovieList(1)
+        viewModel.callGenresList()
         viewModel.callPopularMovieList(1)
         initViews()
         getMovies()
@@ -95,6 +101,17 @@ class HomeFragment : Fragment(), ItemOnClickListener {
                 popularMoviesAdapter.initLoad(data?.results as List<ResultsItem>)
             } else {
                 popularMoviesAdapter.pagingLoad(data?.results as List<ResultsItem>)
+            }
+        }
+
+        viewModel.genresListLiveData.observe(viewLifecycleOwner) { data ->
+            var genresTable : GenresTable
+            for (s in data?.genres!!){
+                genresTable = GenresTable(
+                    id = s.id,
+                    name = s.name
+                )
+                viewModel.addGenres(genresTable)
             }
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) {

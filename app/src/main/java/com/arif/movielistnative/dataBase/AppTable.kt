@@ -27,6 +27,4 @@ data class AppTable(
 
     @ColumnInfo(name = "genres")
     val genres: String? = null,
-
-
     )

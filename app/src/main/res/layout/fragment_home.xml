@@ -63,10 +63,10 @@
                 tools:listitem="@layout/view_now_showing_movie" />
 
             <LinearLayout
-                android:orientation="vertical"
                 android:id="@+id/bottom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -80,9 +80,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/popularRecView"
                     android:layout_width="match_parent"
-                    android:layout_height="700dp"
+                    android:layout_height="1000dp"
                     android:layout_marginTop="10dp"
-                    android:focusable="true"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/view_popular_movie_showing" />
             </LinearLayout>
