@@ -58,7 +58,7 @@ class MovieDetailsFragment : Fragment() {
 
                 binding.movieDetailsTitle.text = data.originalTitle
 
-                binding.movieDetailsRatting.text ="${ data.voteAverage}/10IMDb"
+                binding.movieDetailsRatting.text = "${data.voteAverage}/10IMDb"
 
                 val list: List<String> = listOf()
 
@@ -77,41 +77,48 @@ class MovieDetailsFragment : Fragment() {
                 if (data.isBookmarked) {
                     binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmarked))
 
-                } else
+                } else {
                     binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmark))
+                }
 
                 binding.bookmarkId.setOnClickListener {
 
-                    if (data.isBookmarked) {
-                        movieDetailsResponse?.let {
-                            viewModel.deleteBookmarks(data.id)
-                            Toasty.warning(this.requireContext(), "Movie Removed from bookmark", Toast.LENGTH_SHORT, true).show()
-                            binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmark))
-                        }
-                    } else {
-                        movieDetailsResponse?.let {
+                   if (data.isBookmarked) movieDetailsResponse?.let {
+                       viewModel.deleteBookmarks(data.id)
+                       Toasty.warning(
+                           this.requireContext(),
+                           "Movie Removed from bookmark",
+                           Toast.LENGTH_SHORT,
+                           true
+                       ).show()
+                       binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmark))
+                   } else movieDetailsResponse?.let {
 
-                            val geners: StringBuilder = StringBuilder()
+                       val genres: StringBuilder = StringBuilder()
 
-                            for (list in it.genres!!) {
-                                geners.append(list!!.name + ",")
-                            }
+                       for (lists in it.genres!!) {
+                           genres.append(lists!!.name + ",")
+                       }
 
-                            val appTable = AppTable(
-                                id = it.id,
-                                originalTitle = it.originalTitle,
-                                voteAverage = it.voteAverage,
-                                runtime = minuteToTime(it.runtime!!),
-                                overview = it.overview,
-                                posterPath = it.posterPath,
-                                genres = geners.substring(0, geners.length - 1)
-                            )
-                            viewModel.addBookmarks(appTable)
-                            Toasty.success(this.requireContext(), "Movie Bookmark Successfully!", Toast.LENGTH_SHORT, true).show()
+                       val appTable = AppTable(
+                           id = it.id,
+                           originalTitle = it.originalTitle,
+                           voteAverage = it.voteAverage,
+                           runtime = minuteToTime(it.runtime!!),
+                           overview = it.overview,
+                           posterPath = it.posterPath,
+                           genres = genres.substring(0, genres.length - 1)
+                       )
+                       viewModel.addBookmarks(appTable)
+                       Toasty.success(
+                           this.requireContext(),
+                           "Movie Bookmark Successfully!",
+                           Toast.LENGTH_SHORT,
+                           true
+                       ).show()
 
-                            binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmarked))
-                        }
-                    }
+                       binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmarked))
+                   }
                     data.isBookmarked = !data.isBookmarked
                 }
             }

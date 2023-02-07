@@ -33,7 +33,6 @@ class PopularMoviesAdapter(
         Glide.with(holder.image).load(imageFirstPart.trim() + data[position].posterPath)
             .error(R.drawable.movie_poster).into(holder.image)
         holder.title.text = data[position].originalTitle
-//        holder.ratting.text = data[position].voteAverage.toString() + "/IMDb"
         holder.layout.setOnClickListener {
             listener.onClickListener("movieid", data[position].id!!)
         }
