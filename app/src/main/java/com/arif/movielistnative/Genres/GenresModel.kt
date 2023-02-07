@@ -1,11 +1,10 @@
 package com.arif.movielistnative.Genres
 
+import com.arif.movielistnative.model.GenresItem
+import com.google.gson.annotations.SerializedName
+
 
 data class GenresModel(
-    val genres: List<Genre>
-)
-data class Genre (
-    val id: Int,
-
-    val name: String
+    @SerializedName("genres")
+    val genres: List<GenresItem?>? = null,
 )

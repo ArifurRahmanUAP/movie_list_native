@@ -1,6 +1,5 @@
 package com.arif.movielistnative.Bookmark.Adapter
 
-import GenresItem
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import com.arif.movielistnative.R
 import com.arif.movielistnative.Utill.listener.DeleteListener
 import com.arif.movielistnative.Utill.listener.ItemOnClickListener
 import com.arif.movielistnative.dataBase.AppTable
+import com.arif.movielistnative.model.GenresItem
 import com.arif.movielistnative.movieDetails.adapter.GenreListAdapter
 import com.bumptech.glide.Glide
 

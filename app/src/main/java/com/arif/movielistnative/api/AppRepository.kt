@@ -15,12 +15,17 @@ class AppRepository @Inject constructor(
     suspend fun getNowShowingMovies(pageNum: Int) = apiService.getNowShowingMovie(pageNum)
 
     suspend fun getMovieDetailsFromId(id: Int) = apiService.getMovieDetailsById(id)
+
     suspend fun getGenresList() = apiService.getGenres()
 
     suspend fun addToBookmark(appTable: AppTable) = appDao.addBookmark(appTable)
+
     suspend fun addGenres(genresTable: GenresTable) = appDao.addGenres(genresTable)
 
     suspend fun getBookmarksMovie() = appDao.getAllBookmarks()
+
+    suspend fun getGenresNameById() = appDao.getGenresListById()
+
     suspend fun isBookmarkExist(id: Int) = appDao.checkIfExit(id)
 
     suspend fun deleteFromBookmark(id: Int?) = appDao.deleteBookmark(id)

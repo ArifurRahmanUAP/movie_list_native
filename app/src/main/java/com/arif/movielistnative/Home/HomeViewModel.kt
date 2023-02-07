@@ -1,16 +1,17 @@
 package com.arif.movielistnative.Home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.arif.movielistnative.model.NowShowingMovieResponseModel
 import javax.inject.Inject
 import androidx.lifecycle.viewModelScope
 import com.arif.movielistnative.Genres.GenresModel
 import com.arif.movielistnative.api.AppRepository
-import com.arif.movielistnative.PopularMovieResponseModel
-import com.arif.movielistnative.dataBase.AppTable
 import com.arif.movielistnative.dataBase.GenresTable
+import com.arif.movielistnative.model.NowShowingMovieResponseModel
+import com.arif.movielistnative.model.PopularMovieResponseModel
+import com.arif.movielistnative.model.Results
 import com.haroldadmin.cnradapter.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -29,6 +30,10 @@ class HomeViewModel @Inject constructor(private val apiRepository: AppRepository
 
     private val _genresListLiveData = MutableLiveData<GenresModel?>()
     val genresListLiveData: LiveData<GenresModel?> get() = _genresListLiveData
+
+    private val _genresNameById = MutableLiveData<List<GenresTable>>()
+    val genresNameById: LiveData<List<GenresTable>> get() = _genresNameById
+
 
     fun callNowShowingMovieList(pageNum: Int) {
         viewModelScope.launch {
@@ -77,6 +82,7 @@ class HomeViewModel @Inject constructor(private val apiRepository: AppRepository
             when (val response = apiRepository.getPopularMovies(pageNum)) {
                 is NetworkResponse.Success -> {
                     _popularMoviesLiveData.value = response.body
+                    Log.d("dataDebug","${response.body}")
                 }
                 is NetworkResponse.ServerError -> {
                     _errorLiveData.value = response.body?.statusMessage ?: ("Something Went Wrong")
@@ -89,12 +95,17 @@ class HomeViewModel @Inject constructor(private val apiRepository: AppRepository
                     _errorLiveData.value = "SomeThing Went Wrong"
                 }
             }
-
         }
-
     }
     fun addGenres(genresTable: GenresTable) {
         viewModelScope.launch { apiRepository.addGenres(genresTable) }
+    }
+
+    fun getGenresNameById() {
+        viewModelScope.launch {
+            val res = apiRepository.getGenresNameById()
+            _genresNameById.value = res
+        }
     }
 
 

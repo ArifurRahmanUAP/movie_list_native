@@ -8,20 +8,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arif.movielistnative.*
-import com.arif.movielistnative.Genres.Genre
-import com.arif.movielistnative.Genres.GenresModel
 import com.arif.movielistnative.Home.adapter.NowShowingMovieAdapter
 import com.arif.movielistnative.Home.adapter.PopularMoviesAdapter
 import com.arif.movielistnative.Utill.listener.ItemOnClickListener
-import com.arif.movielistnative.api.ApiService
-import com.arif.movielistnative.dataBase.AppTable
 import com.arif.movielistnative.dataBase.GenresTable
 import com.arif.movielistnative.databinding.FragmentHomeBinding
-import com.arif.movielistnative.model.NowShowingMovieResponseModel
-import com.arif.movielistnative.model.ResultsItemNowShowing
+import com.arif.movielistnative.model.Results
+import com.arif.movielistnative.model.ResultsPopular
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,12 +27,13 @@ class HomeFragment : Fragment(), ItemOnClickListener {
     lateinit var popularMoviesAdapter: PopularMoviesAdapter
     lateinit var nowShowingMovieAdapter: NowShowingMovieAdapter
     private var pageNumPopularMovies = 1
+    var list: MutableList<GenresTable> = mutableListOf()
     private var pageNumNowShowingMovies = 2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -49,6 +45,7 @@ class HomeFragment : Fragment(), ItemOnClickListener {
         }
         viewModel.callNowShowingMovieList(1)
         viewModel.callGenresList()
+        viewModel.getGenresNameById()
         viewModel.callPopularMovieList(1)
         initViews()
         getMovies()
@@ -76,12 +73,17 @@ class HomeFragment : Fragment(), ItemOnClickListener {
             }
         })
 
+        viewModel.genresNameById.observe(viewLifecycleOwner) { data ->
+            list.clear()
+            list.addAll(data as List<GenresTable>)
+        }
+
         viewModel.nowShowingList.observe(viewLifecycleOwner) { data ->
 
             if (pageNumNowShowingMovies == 1) {
-                nowShowingMovieAdapter.initLoad(data?.results as List<ResultsItemNowShowing>)
+                nowShowingMovieAdapter.initLoad(data?.results as List<Results>)
             } else {
-                nowShowingMovieAdapter.pagingLoad(data?.results as List<ResultsItemNowShowing>)
+                nowShowingMovieAdapter.pagingLoad(data?.results as List<Results>)
             }
         }
 
@@ -98,22 +100,23 @@ class HomeFragment : Fragment(), ItemOnClickListener {
         viewModel.popularMovieList.observe(viewLifecycleOwner) { data ->
 
             if (pageNumPopularMovies == 1) {
-                popularMoviesAdapter.initLoad(data?.results as List<ResultsItem>)
+                popularMoviesAdapter.initLoad(data?.results as List<ResultsPopular>, list)
             } else {
-                popularMoviesAdapter.pagingLoad(data?.results as List<ResultsItem>)
+                popularMoviesAdapter.pagingLoad(data?.results as List<ResultsPopular>, list)
             }
         }
 
         viewModel.genresListLiveData.observe(viewLifecycleOwner) { data ->
-            var genresTable : GenresTable
-            for (s in data?.genres!!){
+            var genresTable: GenresTable
+            for (s in data?.genres!!) {
                 genresTable = GenresTable(
-                    id = s.id,
-                    name = s.name
+                    id = s?.id,
+                    name = s?.name
                 )
                 viewModel.addGenres(genresTable)
             }
         }
+
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_LONG).show()
         }

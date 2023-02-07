@@ -1,12 +1,12 @@
 package com.arif.movielistnative.movieDetails
 
-import MovieDetailsResponseModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arif.movielistnative.api.AppRepository
 import com.arif.movielistnative.dataBase.AppTable
+import com.arif.movielistnative.model.MovieDetailsResponseModel
 import com.haroldadmin.cnradapter.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

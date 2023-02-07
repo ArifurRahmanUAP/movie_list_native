@@ -1,64 +1,31 @@
-package com.arif.movielistnative
+package com.arif.movielistnative.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
+class PopularMovieResponseModel(
 
-data class PopularMovieResponseModel(
+    @SerializedName("page") var page: Int? = null,
+    @SerializedName("results") var results: ArrayList<ResultsPopular> = arrayListOf(),
+    @SerializedName("total_pages") var totalPages: Int? = null,
+    @SerializedName("total_results") var totalResults: Int? = null
 
-    @Json(name="page")
-    val page: Int? = null,
-
-    @Json(name="total_pages")
-    val totalPages: Int? = null,
-
-    @Json(name="results")
-    val results: List<ResultsItem>? = null,
-
-    @Json(name="total_results")
-    val totalResults: Int? = null
 )
 
-data class ResultsItem(
+data class ResultsPopular(
 
-    @Json(name="overview")
-    val overview: String? = null,
+    @SerializedName("adult") var adult: Boolean? = null,
+    @SerializedName("backdrop_path") var backdropPath: String? = null,
+    @SerializedName("genre_ids") var genreIds: ArrayList<Int> = arrayListOf(),
+    @SerializedName("id") var id: Int? = null,
+    @SerializedName("original_language") var originalLanguage: String? = null,
+    @SerializedName("original_title") var originalTitle: String? = null,
+    @SerializedName("overview") var overview: String? = null,
+    @SerializedName("popularity") var popularity: Double? = null,
+    @SerializedName("poster_path") var posterPath: String? = null,
+    @SerializedName("release_date") var releaseDate: String? = null,
+    @SerializedName("title") var title: String? = null,
+    @SerializedName("video") var video: Boolean? = null,
+    @SerializedName("vote_average") var voteAverage: Double? = null,
+    @SerializedName("vote_count") var voteCount: Int? = null
 
-    @field:Json(name="original_language")
-    val originalLanguage: String? = null,
-
-    @field:Json(name="original_title")
-    val originalTitle: String? = null,
-
-    @Json(name="video")
-    val video: Boolean? = null,
-
-    @Json(name="title")
-    val title: String? = null,
-
-    @Json(name="genre_ids")
-    val genreIds: List<Int?>? = null,
-
-    @field:Json(name="poster_path")
-    val posterPath: String? = null,
-
-    @field:Json(name="backdrop_path")
-    val backdropPath: String? = null,
-
-    @Json(name="release_date")
-    val releaseDate: String? = null,
-
-    @Json(name="popularity")
-    val popularity: Any? = null,
-
-    @field:Json(name="vote_average")
-    val voteAverage: Any? = null,
-
-    @Json(name="id")
-    val id: Int? = null,
-
-    @Json(name="adult")
-    val adult: Boolean? = null,
-
-    @field:Json(name="vote_count")
-    val voteCount: Int? = null
 )

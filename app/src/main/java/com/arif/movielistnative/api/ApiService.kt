@@ -1,10 +1,10 @@
 package com.arif.movielistnative.api
 
-import MovieDetailsResponseModel
 import com.arif.movielistnative.ErrorResponse
 import com.arif.movielistnative.Genres.GenresModel
-import com.arif.movielistnative.PopularMovieResponseModel
+import com.arif.movielistnative.model.MovieDetailsResponseModel
 import com.arif.movielistnative.model.NowShowingMovieResponseModel
+import com.arif.movielistnative.model.PopularMovieResponseModel
 import com.haroldadmin.cnradapter.NetworkResponse
 import retrofit2.http.GET
 import retrofit2.http.Path

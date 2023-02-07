@@ -1,7 +1,5 @@
 package com.arif.movielistnative.movieDetails
 
-import GenresItem
-import MovieDetailsResponseModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +9,8 @@ import androidx.fragment.app.viewModels
 import com.arif.movielistnative.R
 import com.arif.movielistnative.dataBase.AppTable
 import com.arif.movielistnative.databinding.FragmentDetailsBinding
+import com.arif.movielistnative.model.GenresItem
+import com.arif.movielistnative.model.MovieDetailsResponseModel
 import com.arif.movielistnative.movieDetails.adapter.GenreListAdapter
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -109,16 +109,12 @@ class MovieDetailsFragment : Fragment() {
                 }
             }
         }
-
     }
 
     fun minuteToTime(minute: Int): String? {
-        var minute = minute
-        var hour = minute / 60
-        minute %= 60
-        if (hour == 0) {
-            hour = 12
-        }
-        return (if (hour < 10) "0$hour" else hour).toString() + "h " + (if (minute < 10) "0$minute" else minute) + "m"
+        var minutes = minute
+        val hour = minute / 60
+        minutes %= 60
+        return (if (hour < 10) "$hour" else hour).toString() + "h " + (if (minute < 10) "0$minutes" else minutes) + "m"
     }
 }

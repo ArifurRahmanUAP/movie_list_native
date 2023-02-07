@@ -1,34 +1,35 @@
+package com.arif.movielistnative.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class MovieBookmarksModel(
 
-    @field:Json(name = "title")
+    @SerializedName("title")
     val title: String? = null,
 
-    @field:Json(name = "backdrop_path")
+    @SerializedName("backdrop_path")
     val backdropPath: String? = null,
 
-    @field:Json(name = "genres")
+    @SerializedName("genres")
     val genres: String? = null,
 
-    @field:Json(name = "id")
+    @SerializedName("id")
     val id: Int? = null,
 
-    @field:Json(name = "overview")
+    @SerializedName("overview")
     val overview: String? = null,
 
-    @field:Json(name = "original_title")
+    @SerializedName("original_title")
     val originalTitle: String? = null,
 
-    @field:Json(name = "runtime")
+    @SerializedName("runtime")
     val runtime: Int? = null,
 
-    @field:Json(name = "poster_path")
+    @SerializedName("poster_path")
     val posterPath: String? = null,
 
 
-    @field:Json(name = "vote_average")
+    @SerializedName("vote_average")
     val voteAverage: Double? = null,
 
     )

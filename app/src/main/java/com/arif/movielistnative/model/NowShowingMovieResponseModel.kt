@@ -1,74 +1,39 @@
 package com.arif.movielistnative.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
-data class NowShowingMovieResponseModel(
-    @field:Json(name = "dates")
-    val dates: Dates? = null,
+data class NowShowingMovieResponseModel (
 
-    @field:Json(name = "page")
-    val page: Int? = null,
+    @SerializedName("dates"         ) var dates        : Dates?             = Dates(),
+    @SerializedName("page"          ) var page         : Int?               = null,
+    @SerializedName("results"       ) var results      : ArrayList<Results> = arrayListOf(),
+    @SerializedName("total_pages"   ) var totalPages   : Int?               = null,
+    @SerializedName("total_results" ) var totalResults : Int?               = null
 
-    @field:Json(name = "total_pages")
-    val totalPages: Int? = null,
-
-    @field:Json(name = "results")
-    val results: List<ResultsItemNowShowing?>? = null,
-
-    @field:Json(name = "total_results")
-    val totalResults: Int? = null
 )
 
-data class ResultsItemNowShowing(
+data class Dates (
 
-    @field:Json(name = "overview")
-    val overview: String? = null,
+    @SerializedName("maximum" ) var maximum : String? = null,
+    @SerializedName("minimum" ) var minimum : String? = null
 
-    @field:Json(name = "original_language")
-    val originalLanguage: String? = null,
-
-    @field:Json(name = "original_title")
-    val originalTitle: String? = null,
-
-    @field:Json(name = "video")
-    val video: Boolean? = null,
-
-    @field:Json(name = "title")
-    val title: String? = null,
-
-    @field:Json(name = "genre_ids")
-    val genreIds: List<Int?>? = null,
-
-    @field:Json(name = "poster_path")
-    val posterPath: String? = null,
-
-    @field:Json(name = "backdrop_path")
-    val backdropPath: String? = null,
-
-    @field:Json(name = "release_date")
-    val releaseDate: String? = null,
-
-    @field:Json(name = "popularity")
-    val popularity: Any? = null,
-
-    @field:Json(name = "vote_average")
-    val voteAverage: Any? = null,
-
-    @field:Json(name = "id")
-    val id: Int? = null,
-
-    @field:Json(name = "adult")
-    val adult: Boolean? = null,
-
-    @field:Json(name = "vote_count")
-    val voteCount: Int? = null
 )
 
-data class Dates(
+data class Results (
 
-    @field:Json(name = "maximum")
-    val maximum: String? = null,
+    @SerializedName("adult"             ) var adult            : Boolean?       = null,
+    @SerializedName("backdrop_path"     ) var backdropPath     : String?        = null,
+    @SerializedName("genre_ids"         ) var genreIds         : ArrayList<Int> = arrayListOf(),
+    @SerializedName("id"                ) var id               : Int?           = null,
+    @SerializedName("original_language" ) var originalLanguage : String?        = null,
+    @SerializedName("original_title"    ) var originalTitle    : String?        = null,
+    @SerializedName("overview"          ) var overview         : String?        = null,
+    @SerializedName("popularity"        ) var popularity       : Double?        = null,
+    @SerializedName("poster_path"       ) var posterPath       : String?        = null,
+    @SerializedName("release_date"      ) var releaseDate      : String?        = null,
+    @SerializedName("title"             ) var title            : String?        = null,
+    @SerializedName("video"             ) var video            : Boolean?       = null,
+    @SerializedName("vote_average"      ) var voteAverage      : Double?        = null,
+    @SerializedName("vote_count"        ) var voteCount        : Int?           = null
 
-    @field:Json(name = "minimum")
-    val minimum: String? = null
 )

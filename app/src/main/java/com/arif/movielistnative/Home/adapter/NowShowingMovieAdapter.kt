@@ -10,14 +10,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.arif.movielistnative.R
 import com.arif.movielistnative.Utill.listener.ItemOnClickListener
-import com.arif.movielistnative.model.ResultsItemNowShowing
+import com.arif.movielistnative.model.Results
 import com.bumptech.glide.Glide
 
 class NowShowingMovieAdapter(private val listener: ItemOnClickListener) :
     RecyclerView.Adapter<NowShowingMovieAdapter.MyViewHolder>() {
 
 
-    private val data: MutableList<ResultsItemNowShowing> = mutableListOf()
+    private val data: MutableList<Results> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -46,7 +46,7 @@ class NowShowingMovieAdapter(private val listener: ItemOnClickListener) :
         return data.size
     }
 
-    fun initLoad(list: List<ResultsItemNowShowing>) {
+    fun initLoad(list: List<Results>) {
 
         data.clear()
         data.addAll(list)
@@ -54,7 +54,7 @@ class NowShowingMovieAdapter(private val listener: ItemOnClickListener) :
 
     }
 
-    fun pagingLoad(list: List<ResultsItemNowShowing>) {
+    fun pagingLoad(list: List<Results>) {
 
         data.addAll(list)
         notifyItemRangeInserted(itemCount, list.size)
