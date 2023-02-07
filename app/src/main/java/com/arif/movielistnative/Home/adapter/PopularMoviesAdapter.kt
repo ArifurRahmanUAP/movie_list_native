@@ -16,8 +16,7 @@ import com.bumptech.glide.Glide
 
 class PopularMoviesAdapter(
     private val listener: ItemOnClickListener
-) :
-    RecyclerView.Adapter<PopularMoviesAdapter.MyViewHolder>() {
+) : RecyclerView.Adapter<PopularMoviesAdapter.MyViewHolder>() {
     private var data: MutableList<ResultsPopular> = mutableListOf()
     private var genre: MutableList<GenresTable> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

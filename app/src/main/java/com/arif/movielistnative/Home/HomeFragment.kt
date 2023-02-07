@@ -31,8 +31,7 @@ class HomeFragment : Fragment(), ItemOnClickListener {
     private var pageNumNowShowingMovies = 2
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -110,8 +109,7 @@ class HomeFragment : Fragment(), ItemOnClickListener {
             var genresTable: GenresTable
             for (s in data?.genres!!) {
                 genresTable = GenresTable(
-                    id = s?.id,
-                    name = s?.name
+                    id = s?.id, name = s?.name
                 )
                 viewModel.addGenres(genresTable)
             }

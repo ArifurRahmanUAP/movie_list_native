@@ -89,6 +89,7 @@ dependencies {
 
     implementation 'com.github.amarjain07:StickyScrollView:1.0.3'
 
+    implementation 'com.github.GrenderG:Toasty:1.5.2'
 
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 

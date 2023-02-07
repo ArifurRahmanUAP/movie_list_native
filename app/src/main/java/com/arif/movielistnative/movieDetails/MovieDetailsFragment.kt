@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.arif.movielistnative.R
@@ -15,6 +16,7 @@ import com.arif.movielistnative.model.MovieDetailsResponseModel
 import com.arif.movielistnative.movieDetails.adapter.GenreListAdapter
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
@@ -83,6 +85,7 @@ class MovieDetailsFragment : Fragment() {
                     if (data.isBookmarked) {
                         movieDetailsResponse?.let {
                             viewModel.deleteBookmarks(data.id)
+                            Toasty.warning(this.requireContext(), "Movie Removed from bookmark", Toast.LENGTH_SHORT, true).show()
                             binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmark))
                         }
                     } else {
@@ -104,6 +107,8 @@ class MovieDetailsFragment : Fragment() {
                                 genres = geners.substring(0, geners.length - 1)
                             )
                             viewModel.addBookmarks(appTable)
+                            Toasty.success(this.requireContext(), "Movie Bookmark Successfully!", Toast.LENGTH_SHORT, true).show()
+
                             binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmarked))
                         }
                     }
