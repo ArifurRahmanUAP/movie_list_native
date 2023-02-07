@@ -1,5 +1,6 @@
 package com.arif.movielistnative.movieDetails
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,11 +26,12 @@ class MovieDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,7 +56,7 @@ class MovieDetailsFragment : Fragment() {
 
                 binding.movieDetailsTitle.text = data.originalTitle
 
-                binding.movieDetailsRatting.text = data.voteAverage.toString() + "/10 IMDb"
+                binding.movieDetailsRatting.text ="${ data.voteAverage}/10IMDb"
 
                 val list: List<String> = listOf()
 
