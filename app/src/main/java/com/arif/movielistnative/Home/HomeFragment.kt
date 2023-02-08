@@ -28,7 +28,7 @@ class HomeFragment : Fragment(), ItemOnClickListener {
     lateinit var nowShowingMovieAdapter: NowShowingMovieAdapter
     private var pageNumPopularMovies = 1
     var list: MutableList<GenresTable> = mutableListOf()
-    private var pageNumNowShowingMovies = 2
+    private var pageNumNowShowingMovies = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -42,6 +42,8 @@ class HomeFragment : Fragment(), ItemOnClickListener {
         binding.drawerIcon.setOnClickListener {
             (activity as MainActivity).openDrawer()
         }
+        pageNumPopularMovies = 1
+        pageNumNowShowingMovies = 1
         viewModel.callNowShowingMovieList(1)
         viewModel.callGenresList()
         viewModel.getGenresNameById()

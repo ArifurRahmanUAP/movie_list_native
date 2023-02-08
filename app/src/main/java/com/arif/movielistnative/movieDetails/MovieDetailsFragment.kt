@@ -83,42 +83,42 @@ class MovieDetailsFragment : Fragment() {
 
                 binding.bookmarkId.setOnClickListener {
 
-                   if (data.isBookmarked) movieDetailsResponse?.let {
-                       viewModel.deleteBookmarks(data.id)
-                       Toasty.warning(
-                           this.requireContext(),
-                           "Movie Removed from bookmark",
-                           Toast.LENGTH_SHORT,
-                           true
-                       ).show()
-                       binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmark))
-                   } else movieDetailsResponse?.let {
+                    if (data.isBookmarked) movieDetailsResponse?.let {
+                        viewModel.deleteBookmarks(data.id)
+                        Toasty.warning(
+                            this.requireContext(),
+                            "${it.originalTitle} Removed from bookmark",
+                            Toast.LENGTH_SHORT,
+                            true
+                        ).show()
+                        binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmark))
+                    } else movieDetailsResponse?.let {
 
-                       val genres: StringBuilder = StringBuilder()
+                        val genres: StringBuilder = StringBuilder()
 
-                       for (lists in it.genres!!) {
-                           genres.append(lists!!.name + ",")
-                       }
+                        for (lists in it.genres!!) {
+                            genres.append(lists!!.name + ",")
+                        }
 
-                       val appTable = AppTable(
-                           id = it.id,
-                           originalTitle = it.originalTitle,
-                           voteAverage = it.voteAverage,
-                           runtime = minuteToTime(it.runtime!!),
-                           overview = it.overview,
-                           posterPath = it.posterPath,
-                           genres = genres.substring(0, genres.length - 1)
-                       )
-                       viewModel.addBookmarks(appTable)
-                       Toasty.success(
-                           this.requireContext(),
-                           "Movie Bookmark Successfully!",
-                           Toast.LENGTH_SHORT,
-                           true
-                       ).show()
+                        val appTable = AppTable(
+                            id = it.id,
+                            originalTitle = it.originalTitle,
+                            voteAverage = it.voteAverage,
+                            runtime = minuteToTime(it.runtime!!),
+                            overview = it.overview,
+                            posterPath = it.posterPath,
+                            genres = genres.substring(0, genres.length - 1)
+                        )
+                        viewModel.addBookmarks(appTable)
+                        Toasty.success(
+                            this.requireContext(),
+                            "${it.originalTitle} added to Bookmark",
+                            Toast.LENGTH_SHORT,
+                            true
+                        ).show()
 
-                       binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmarked))
-                   }
+                        binding.bookmarkId.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmarked))
+                    }
                     data.isBookmarked = !data.isBookmarked
                 }
             }
